@@ -1,5 +1,5 @@
 {
-    "name": "famelo/notify",
+    "name": "famelo/messaging",
     "type": "typo3-flow-package",
     "description": "",
     "require": {
@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Famelo\\Notify": "Classes"
+            "Famelo\\Messaging": "Classes"
         }
     }
 }
