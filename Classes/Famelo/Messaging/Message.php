@@ -72,5 +72,17 @@ class Message extends \TYPO3\SwiftMailer\Message {
 
 		parent::send();
 	}
+
+	public function assign($key, $value) {
+		$this->view->assign($key, $value);
+		return $this;
+	}
+
+	public function assignMultiple(array $values) {
+		foreach ($values as $key => $value) {
+			$this->assign($key, $value);
+		}
+		return $this;
+	}
 }
 ?>
