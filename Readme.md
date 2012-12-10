@@ -4,12 +4,11 @@ Little helper to send Messages with SwiftMailer rendered through Fluid:
 
 ```php
   	$mail = new \Famelo\Messaging\Message();
-		$mail
-			->setFrom(array('apocalip@gmail.com' => 'Famelo.PackageCatalog'))
-			->setTo(array('apocalip@gmail.com'))
-			->setSubject('ADU: Übersicht über nicht zufriedene Kunden')
-			->setMessage('Famelo.ADU:RatingNeglect')
-			->send();
+	$mail->setFrom(array('mail@me.com' => 'Me :)'))
+		->setTo(array('mail@you.com'))
+		->setSubject('How are you?')
+		->setMessage('My.Package:HelloWorld')
+		->send();
 ````
 
-This will try to render a Template at resource://Famelo.ADU/Private/Messages/RatingNeglect
+This will try to render a Template at resource://My.Package/Private/Messages/HelloWorld.html
