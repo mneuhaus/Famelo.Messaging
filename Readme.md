@@ -8,6 +8,7 @@ Little helper to send Messages with SwiftMailer rendered through Fluid:
 		->setTo(array('mail@you.com'))
 		->setSubject('How are you?')
 		->setMessage('My.Package:HelloWorld')
+		->assign('someVariable', 'Hello World')
 		->send();
 ````
 
