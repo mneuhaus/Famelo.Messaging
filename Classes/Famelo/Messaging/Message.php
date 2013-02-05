@@ -54,9 +54,14 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	}
 
 	public function send() {
+		$this->setBody($this->render(), 'text/html');
+		parent::send();
+	}
+
+	public function render() {
 		if ($this->package === NULL) {
 			$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-			$class = $trace[0]['class'];
+			$class = $trace[1]['class'];
 			preg_match('/([A-Za-z]*)\\\\([A-Za-z]*)/', $class, $match);
 			$this->package = $match[1] . '.' . $match[2];
 		}
@@ -67,10 +72,7 @@ class Message extends \TYPO3\SwiftMailer\Message {
 		);
 		$template = str_replace(array_keys($replacements), array_values($replacements), $this->templatePath);
 		$this->view->setTemplatePathAndFilename($template);
-
-		$this->setBody($this->view->render(), 'text/html');
-
-		parent::send();
+		return $this->view->render();
 	}
 
 	public function assign($key, $value) {
