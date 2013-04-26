@@ -35,6 +35,12 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	protected $package = NULL;
 
 	/**
+	 * @Flow\Inject
+	 * @var \TYPO3\Flow\Configuration\ConfigurationManager
+	 */
+	protected $configurationManager;
+
+	/**
 	 * The view
 	 *
 	 * @var \TYPO3\Fluid\View\StandaloneView
@@ -54,6 +60,11 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	}
 
 	public function send() {
+		$redirectAllMessagesTo = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Famelo.Messaging.redirectAllMessagesTo');
+		if ($redirectAllMessagesTo !== NULL) {
+			$this->setTo($redirectAllMessagesTo);
+		}
+
 		$this->setBody($this->render(), 'text/html');
 		parent::send();
 	}
