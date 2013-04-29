@@ -1,0 +1,52 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+
+env:
+  - FLOW_VERSION=2.0.*
+  - FLOW_VERSION=dev-master
+
+before_script:
+  - mkdir Build; cd Build
+  # Test this
+  - |
+    cat <<EOF > composer.json
+    {
+        "name": "typo3/flow-base-distribution",
+        "config": {
+            "vendor-dir": "Packages/Libraries",
+            "bin-dir": "bin"
+        },
+        "require": {
+            "famelo/messaging": "dev-${TRAVIS_BRANCH}#${TRAVIS_COMMIT}"
+        },
+        "require-dev": {
+            "typo3/buildessentials": "dev-master",
+            "mikey179/vfsstream": "1.1.*"
+        },
+        "minimum-stability": "dev",
+        "scripts": {
+            "post-update-cmd": "TYPO3\\\\Flow\\\\Composer\\\\InstallerScripts::postUpdateAndInstall",
+            "post-install-cmd": "TYPO3\\\\Flow\\\\Composer\\\\InstallerScripts::postUpdateAndInstall"
+        }
+    }
+    EOF
+  # Install Flow in different versions
+  - composer require typo3/flow:${FLOW_VERSION} --no-update
+  - composer update --dev
+  # We need to override the default Routes because they reference the non-existing Welcome package
+  - |
+    cat <<EOF > Configuration/Routes.yaml
+    -
+      name: 'Flow'
+      uriPattern: '<FlowSubroutes>'
+      defaults:
+        '@format': 'html'
+      subRoutes:
+        FlowSubroutes:
+          package: TYPO3.Flow
+    EOF
+
+script: phpunit -c Build/BuildEssentials/PhpUnit/FunctionalTests.xml Packages
