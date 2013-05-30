@@ -48,6 +48,13 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	 */
 	protected $view;
 
+	public function __construct($subject = null, $body = null,
+	                            $contentType = null, $charset = null) {
+		$this->setCharset('text/html');
+
+		parent::__construct($subject, $body, $contentType, $charset);
+	}
+
 	public function setMessage($message) {
 		$parts = explode(':', $message);
 		if (count($parts) > 1) {
@@ -65,7 +72,7 @@ class Message extends \TYPO3\SwiftMailer\Message {
 			$this->setTo($redirectAllMessagesTo);
 		}
 
-		$this->setBody($this->render(), 'text/html');
+		$this->setBody($this->render(), $this->getContentType());
 		parent::send();
 	}
 
