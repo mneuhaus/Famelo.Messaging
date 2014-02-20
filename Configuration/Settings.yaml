@@ -1,3 +1,14 @@
-# Famelo:
-#  Messaging:
-#    redirectAllMessagesTo: foo@bar.com
+Famelo:
+  Messaging:
+    # redirectAllMessagesTo: foo@bar.com
+    # defaultFrom:
+    #   mneuhaus@famelo.com: 'Marc Neuhaus'
+
+# TYPO3:
+#   SwiftMailer:
+#     transport:
+#       type: 'Swift_SmtpTransport'
+#       options:
+#         host: 'mail.foo.com'
+#         username: 'foo'
+#         password: 'bar'
