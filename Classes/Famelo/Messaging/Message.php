@@ -12,6 +12,7 @@ namespace Famelo\Messaging;
  *                                                                        */
 
 use TYPO3\Flow\Annotations as Flow;
+use TYPO3\Flow\Reflection\ObjectAccess;
 
 /**
  * Message class for the SwiftMailer package
@@ -53,7 +54,7 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	/**
 	 * The view
 	 *
-	 * @var \TYPO3\Fluid\View\StandaloneView
+	 * @var \Famelo\Messaging\View\StandaloneView
 	 * @Flow\Inject
 	 */
 	protected $view;
@@ -99,6 +100,16 @@ class Message extends \TYPO3\SwiftMailer\Message {
 		}
 
 		$this->setBody($this->render(), $this->getContentType());
+
+		$viewHelperVariableContainer = $this->view->getViewHelperVariableContainer();
+		$settings = array('to', 'from', 'subject');
+		foreach ($settings as $setting) {
+			if ($viewHelperVariableContainer->exists('Famelo\Messaging\ViewHelpers\MessageViewHelper', $setting)) {
+				$value = $viewHelperVariableContainer->get('Famelo\Messaging\ViewHelpers\MessageViewHelper', $setting);
+				ObjectAccess::setProperty($this, $setting, $value);
+			}
+		}
+
 		parent::send();
 	}
 
