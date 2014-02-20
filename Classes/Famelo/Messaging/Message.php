@@ -24,6 +24,11 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	 */
 	protected $templatePath = 'resource://@package/Private/Messages/@message.html';
 
+	/*
+	 * @var string
+	 */
+	protected $partialRootPath = 'resource://@package/Private/Partials';
+
 	/**
 	 * @var string
 	 */
@@ -114,6 +119,9 @@ class Message extends \TYPO3\SwiftMailer\Message {
 			);
 			$template = str_replace(array_keys($replacements), array_values($replacements), $this->templatePath);
 			$this->view->setTemplatePathAndFilename($template);
+
+			$partialRootPath = str_replace(array_keys($replacements), array_values($replacements), $this->partialRootPath);
+			$this->view->setPartialRootPath($partialRootPath);
 		} else {
 			$this->view->setTemplateSource($this->source);
 		}
