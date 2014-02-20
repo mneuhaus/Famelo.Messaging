@@ -92,6 +92,11 @@ class Message extends \TYPO3\SwiftMailer\Message {
 			$this->setTo($redirectAllMessagesTo);
 		}
 
+		$defaultFrom = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Famelo.Messaging.defaultFrom');
+		if ($defaultFrom !== NULL && $this->getFrom() === array()) {
+			$this->setFrom($defaultFrom);
+		}
+
 		if (FLOW_SAPITYPE === 'CLI' && self::$routerConfigured === FALSE) {
 			$routesConfiguration = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_ROUTES);
 			$this->router->setRoutesConfiguration($routesConfiguration);
