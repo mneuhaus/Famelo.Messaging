@@ -24,12 +24,14 @@ class MessageViewHelper extends AbstractViewHelper {
 	 * This tag will not be rendered at all.
 	 *
 	 * @param strint $to
+	 * @param strint $toName
+	 * @param strint $toEmail
 	 * @param strint $from
 	 * @param strint $subject
 	 * @return void
 	 * @api
 	 */
-	public function render($to = NULL, $from = NULL, $subject = NULL) {
+	public function render($to = NULL, $toName = NULL, $toEmail = NULL, $from = NULL, $subject = NULL) {
 		foreach ($this->arguments as $key => $value) {
 			if ($value === NULL) {
 				continue;
@@ -39,6 +41,12 @@ class MessageViewHelper extends AbstractViewHelper {
 				$value = array($parts[0] => $parts[1]);
 			}
 			$this->viewHelperVariableContainer->add('Famelo\Messaging\ViewHelpers\MessageViewHelper', $key, $value);
+		}
+
+		if ($toEmail !== NULL) {
+			$this->viewHelperVariableContainer->add('Famelo\Messaging\ViewHelpers\MessageViewHelper', 'to', array(
+				$toEmail => $toName
+			));
 		}
 	}
 }
