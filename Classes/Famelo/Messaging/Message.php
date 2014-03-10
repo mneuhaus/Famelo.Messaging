@@ -120,6 +120,7 @@ class Message extends \TYPO3\SwiftMailer\Message {
 
 	public function render() {
 		$this->view->getRequest()->getHttpRequest()->injectSettings($this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'TYPO3.Flow'));
+		$this->view->assign('baseUri', $this->view->getRequest()->getHttpRequest()->getBaseUri());
 
 		if ($this->source === NULL) {
 			if ($this->package === NULL) {
