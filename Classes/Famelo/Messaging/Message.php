@@ -87,6 +87,11 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	}
 
 	public function send() {
+		$this->prepare();
+		parent::send();
+	}
+
+	public function prepare() {
 		$redirectAllMessagesTo = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Famelo.Messaging.redirectAllMessagesTo');
 		if ($redirectAllMessagesTo !== NULL) {
 			$this->setTo($redirectAllMessagesTo);
@@ -114,8 +119,20 @@ class Message extends \TYPO3\SwiftMailer\Message {
 				ObjectAccess::setProperty($this, $setting, $value);
 			}
 		}
+	}
 
-		parent::send();
+	public function test() {
+		$this->prepare();
+		$settings = array('to', 'from', 'subject', 'body');
+		echo '<table class="table table-striped table-bordered">';
+		foreach ($settings as $setting) {
+			$value = ObjectAccess::getProperty($this, $setting);
+			if (is_array($value)) {
+				$value = implode(' => ', $value);
+			}
+			echo '<tr><th>' . $setting . '</th><td>' . $value . '</td></tr>';
+		}
+		echo '</table>';
 	}
 
 	public function render() {

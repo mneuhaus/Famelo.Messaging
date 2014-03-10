@@ -45,7 +45,7 @@ class MessageViewHelper extends AbstractViewHelper {
 
 		if ($toEmail !== NULL) {
 			$this->viewHelperVariableContainer->add('Famelo\Messaging\ViewHelpers\MessageViewHelper', 'to', array(
-				$toEmail => $toName
+				strval($toEmail) => strval($toName)
 			));
 		}
 	}
