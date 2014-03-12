@@ -53,4 +53,6 @@ before_script:
           package: TYPO3.Flow
     EOF
 
-script: phpunit -c Build/BuildEssentials/PhpUnit/FunctionalTests.xml Packages/Framework
+script:
+    - phpunit -c Build/BuildEssentials/PhpUnit/UnitTests.xml
+    - phpunit -c Build/BuildEssentials/PhpUnit/FunctionalTests.xml
