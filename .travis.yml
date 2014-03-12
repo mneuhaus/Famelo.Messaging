@@ -21,6 +21,7 @@ before_script:
         },
         "require": {
             "famelo/messaging": "dev-${TRAVIS_BRANCH}#${TRAVIS_COMMIT}"
+            "typo3/flow": "${FLOW_VERSION}"
         },
         "require-dev": {
             "typo3/buildessentials": "dev-master",
@@ -38,7 +39,6 @@ before_script:
     }
     EOF
   # Install Flow in different versions
-  - composer require typo3/flow:${FLOW_VERSION} --no-update
   - composer update
   # We need to override the default Routes because they reference the non-existing Welcome package
   - |
