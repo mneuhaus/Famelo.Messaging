@@ -39,7 +39,7 @@ before_script:
     }
     EOF
   # Install Flow in different versions
-  - composer update
+  - composer install
   # We need to override the default Routes because they reference the non-existing Welcome package
   - |
     cat <<EOF > Configuration/Routes.yaml
