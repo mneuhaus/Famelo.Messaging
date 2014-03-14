@@ -46,6 +46,11 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	protected $source = NULL;
 
 	/**
+	 * @var string
+	 */
+	protected $rawBody;
+
+	/**
 	 * @Flow\Inject
 	 * @var \TYPO3\Flow\Configuration\ConfigurationManager
 	 */
@@ -159,7 +164,12 @@ class Message extends \TYPO3\SwiftMailer\Message {
 		} else {
 			$this->view->setTemplateSource($this->source);
 		}
-		return $this->view->render();
+		$this->rawBody = $this->view->render();
+		return $this->rawBody;
+	}
+
+	public function getRawBody() {
+		return $this->rawBody;
 	}
 
 	public function assign($key, $value) {
