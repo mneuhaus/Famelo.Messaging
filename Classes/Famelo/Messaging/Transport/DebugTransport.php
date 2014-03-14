@@ -87,7 +87,9 @@ class DebugTransport implements \TYPO3\SwiftMailer\TransportInterface {
 
     public static function clearEmails() {
         $filepath = FLOW_PATH_DATA . '/Messages/';
-        Files::emptyDirectoryRecursively($filepath);
+        if (is_dir($filepath)) {
+            Files::emptyDirectoryRecursively($filepath);
+        }
     }
 
     /**
