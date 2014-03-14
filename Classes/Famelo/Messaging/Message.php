@@ -97,10 +97,6 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	}
 
 	public function prepare() {
-		$redirectAllMessagesTo = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Famelo.Messaging.redirectAllMessagesTo');
-		if ($redirectAllMessagesTo !== NULL) {
-			$this->setTo($redirectAllMessagesTo);
-		}
 
 		$defaultFrom = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Famelo.Messaging.defaultFrom');
 		if ($defaultFrom !== NULL && $this->getFrom() === array()) {
@@ -122,7 +118,13 @@ class Message extends \TYPO3\SwiftMailer\Message {
 			if ($viewHelperVariableContainer->exists('Famelo\Messaging\ViewHelpers\MessageViewHelper', $setting)) {
 				$value = $viewHelperVariableContainer->get('Famelo\Messaging\ViewHelpers\MessageViewHelper', $setting);
 				ObjectAccess::setProperty($this, $setting, $value);
+				$viewHelperVariableContainer->remove('Famelo\Messaging\ViewHelpers\MessageViewHelper', $setting);
 			}
+		}
+
+		$redirectAllMessagesTo = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Famelo.Messaging.redirectAllMessagesTo');
+		if ($redirectAllMessagesTo !== NULL) {
+			$this->setTo($redirectAllMessagesTo);
 		}
 	}
 
