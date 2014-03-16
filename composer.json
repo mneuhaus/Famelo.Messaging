@@ -7,7 +7,7 @@
         {
             "name": "Marc Neuhaus",
             "email": "apocalip@gmail.com"
-        },
+        }
     ],
     "require": {
         "typo3/flow": "*",
