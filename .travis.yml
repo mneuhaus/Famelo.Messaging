@@ -54,5 +54,9 @@ before_script:
           package: TYPO3.Flow
     EOF
 
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+
 script:
-    - phpunit -c Build/BuildEssentials/PhpUnit/FunctionalTests.xml Packages/Application/Famelo.Messaging/Tests/Functional
+    - phpunit --coverage-clover=coverage.clover -c Build/BuildEssentials/PhpUnit/FunctionalTests.xml Packages/Application/Famelo.Messaging/Tests/Functional
