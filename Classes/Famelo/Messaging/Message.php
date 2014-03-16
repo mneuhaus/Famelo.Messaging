@@ -100,21 +100,31 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	}
 
 	public function prepare() {
-
 		$defaultFrom = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Famelo.Messaging.defaultFrom');
 		if ($defaultFrom !== NULL && $this->getFrom() === array()) {
 			$this->setFrom($defaultFrom);
 		}
 
+		$this->initializeRouter();
+		$this->setBody($this->render(), $this->getContentType());
+		$this->setOptionsByViewHelper();
+
+		$redirectAllMessagesTo = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Famelo.Messaging.redirectAllMessagesTo');
+		if ($redirectAllMessagesTo !== NULL) {
+			$this->setTo($redirectAllMessagesTo);
+		}
+	}
+
+	public function initializeRouter() {
 		if (FLOW_SAPITYPE === 'CLI' && self::$routerConfigured === FALSE) {
 			$routesConfiguration = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_ROUTES);
 			$this->router->setRoutesConfiguration($routesConfiguration);
 			self::$routerConfigured = TRUE;
 			putenv('REDIRECT_FLOW_REWRITEURLS=true');
 		}
+	}
 
-		$this->setBody($this->render(), $this->getContentType());
-
+	public function setOptionsByViewHelper() {
 		$viewHelperVariableContainer = $this->view->getViewHelperVariableContainer();
 		$settings = array('to', 'from', 'subject');
 		foreach ($settings as $setting) {
@@ -123,11 +133,6 @@ class Message extends \TYPO3\SwiftMailer\Message {
 				ObjectAccess::setProperty($this, $setting, $value);
 				$viewHelperVariableContainer->remove('Famelo\Messaging\ViewHelpers\MessageViewHelper', $setting);
 			}
-		}
-
-		$redirectAllMessagesTo = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Famelo.Messaging.redirectAllMessagesTo');
-		if ($redirectAllMessagesTo !== NULL) {
-			$this->setTo($redirectAllMessagesTo);
 		}
 	}
 
@@ -148,7 +153,12 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	public function render() {
 		$this->view->getRequest()->getHttpRequest()->injectSettings($this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'TYPO3.Flow'));
 		$this->view->assign('baseUri', $this->view->getRequest()->getHttpRequest()->getBaseUri());
+		$this->setSource();
+		$this->rawBody = $this->view->render();
+		return $this->rawBody;
+	}
 
+	protected function setSource() {
 		if ($this->source === NULL) {
 			if ($this->package === NULL) {
 				$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
@@ -169,8 +179,6 @@ class Message extends \TYPO3\SwiftMailer\Message {
 		} else {
 			$this->view->setTemplateSource($this->source);
 		}
-		$this->rawBody = $this->view->render();
-		return $this->rawBody;
 	}
 
 	public function getRawBody() {
