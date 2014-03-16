@@ -1,5 +1,7 @@
 # Famelo.Messaging
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mneuhaus/Famelo.Messaging/badges/quality-score.png?s=a27fa967fe33de193aac7e2846400286578f5dfb)](https://scrutinizer-ci.com/g/mneuhaus/Famelo.Messaging/)
+
 Little helper to send Messages with SwiftMailer rendered through Fluid:
 
 ```php
