@@ -5,8 +5,8 @@ php:
   - 5.4
 
 env:
-  #- FLOW_VERSION=2.1.*
-  - FLOW_VERSION=dev-master
+  - FLOW_VERSION=2.1.*
+  # - FLOW_VERSION=dev-master
 
 before_script:
   - mkdir Build; cd Build
@@ -20,7 +20,7 @@ before_script:
             "bin-dir": "bin"
         },
         "require": {
-            "famelo/messaging": "dev-${TRAVIS_BRANCH}#${TRAVIS_COMMIT}"
+            "famelo/messaging": "dev-${TRAVIS_BRANCH}#${TRAVIS_COMMIT}",
             "typo3/flow": "${FLOW_VERSION}"
         },
         "require-dev": {
