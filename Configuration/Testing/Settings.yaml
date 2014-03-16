@@ -1,0 +1,4 @@
+TYPO3:
+  SwiftMailer:
+    transport:
+      type: 'Famelo\Messaging\Transport\DebugTransport'
