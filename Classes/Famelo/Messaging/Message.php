@@ -75,8 +75,7 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	 */
 	protected static $routerConfigured = FALSE;
 
-	public function __construct($subject = NULL, $body = NULL,
-	                            $contentType = NULL, $charset = NULL) {
+	public function __construct($subject = NULL, $body = NULL, $contentType = NULL, $charset = NULL) {
 		if ($contentType === NULL) {
 			$contentType = 'text/html';
 		}
