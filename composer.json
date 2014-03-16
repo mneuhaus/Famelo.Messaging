@@ -1,7 +1,14 @@
 {
     "name": "famelo/messaging",
     "type": "typo3-flow-package",
-    "description": "",
+    "description": "Little helper to send Messages with SwiftMailer rendered through Fluid.",
+    "homepage": "https://github.com/mneuhaus/Famelo.Messaging",
+    "authors": [
+        {
+            "name": "Marc Neuhaus",
+            "email": "apocalip@gmail.com"
+        },
+    ],
     "require": {
         "typo3/flow": "*",
         "typo3/swiftmailer": "*"

@@ -2,6 +2,12 @@
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mneuhaus/Famelo.Messaging/badges/quality-score.png?s=a27fa967fe33de193aac7e2846400286578f5dfb)](https://scrutinizer-ci.com/g/mneuhaus/Famelo.Messaging/)
 
+[![Build Status](https://travis-ci.org/mneuhaus/Famelo.Messaging.png?branch=master)](https://travis-ci.org/mneuhaus/Famelo.Messaging)
+
+[![License](https://poser.pugx.org/famelo/messaging/license.png)](https://packagist.org/packages/famelo/messaging)
+
+[![Total Downloads](https://poser.pugx.org/famelo/messaging/downloads.png)](https://packagist.org/packages/famelo/messaging)
+
 Little helper to send Messages with SwiftMailer rendered through Fluid:
 
 ```php
