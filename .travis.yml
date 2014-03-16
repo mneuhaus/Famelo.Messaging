@@ -3,6 +3,7 @@ language: php
 php:
   - 5.3
   - 5.4
+  - 5.5
 
 env:
   - FLOW_VERSION=2.1.*
@@ -54,5 +55,4 @@ before_script:
     EOF
 
 script:
-    - phpunit -c Build/BuildEssentials/PhpUnit/UnitTests.xml
-    - phpunit -c Build/BuildEssentials/PhpUnit/FunctionalTests.xml
+    - phpunit -c Build/BuildEssentials/PhpUnit/FunctionalTests.xml Packages/Application/Famelo.Messaging/Tests/Functional
