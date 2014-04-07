@@ -200,5 +200,11 @@ class Message extends \TYPO3\SwiftMailer\Message {
 		$this->source = $source;
 		return $this;
 	}
+
+	public function setRecipientGroup($name) {
+		$recipients = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Famelo.Messaging.recipients');
+		$this->setTo($recipients[$name]);
+		return $this;
+	}
 }
 ?>
