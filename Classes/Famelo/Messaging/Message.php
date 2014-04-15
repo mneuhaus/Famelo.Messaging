@@ -87,6 +87,7 @@ class Message extends \TYPO3\SwiftMailer\Message {
 		if (count($parts) > 1) {
 			$this->package = $parts[0];
 			$this->message = $parts[1];
+			$this->view->getRequest()->setControllerPackageKey($this->package);
 		} else {
 			$this->message = $message;
 		}
