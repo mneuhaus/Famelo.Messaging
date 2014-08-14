@@ -21,7 +21,13 @@ use TYPO3\Flow\Annotations as Flow;
  * @api
  */
 class StandaloneView extends \TYPO3\Fluid\View\StandaloneView {
+	/**
+	 * @var ActionRequest
+	 */
+	static protected $caughtRequest;
+
 	public function initializeObject() {
+		$this->request = self::$caughtRequest;
 		parent::initializeObject();
 
 		$this->request->setFormat('html');
@@ -29,5 +35,9 @@ class StandaloneView extends \TYPO3\Fluid\View\StandaloneView {
 
 	public function getViewHelperVariableContainer() {
 		return $this->baseRenderingContext->getViewHelperVariableContainer();
+	}
+
+	public function catchCurrentRequest($request) {
+		self::$caughtRequest = $request;
 	}
 }

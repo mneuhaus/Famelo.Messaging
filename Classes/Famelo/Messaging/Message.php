@@ -12,6 +12,7 @@ namespace Famelo\Messaging;
  *                                                                        */
 
 use TYPO3\Flow\Annotations as Flow;
+use TYPO3\Flow\Mvc\ActionRequest;
 use TYPO3\Flow\Reflection\ObjectAccess;
 
 /**
@@ -151,8 +152,6 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	}
 
 	public function render() {
-		$this->view->getRequest()->getHttpRequest()->injectSettings($this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'TYPO3.Flow'));
-		$this->view->assign('baseUri', $this->view->getRequest()->getHttpRequest()->getBaseUri());
 		$this->setSource();
 		$this->rawBody = $this->view->render();
 		return $this->rawBody;
