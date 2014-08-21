@@ -1,8 +1,11 @@
-Famelo:
-  Messaging:
+#Famelo:
+  #Messaging:
     # redirectAllMessagesTo: foo@bar.com
     # defaultFrom:
     #   mneuhaus@famelo.com: 'Marc Neuhaus'
+    # request:
+    #   defaultPackage: 'My.Package'
+    #   defaultSubpackage: 'Frontend'
 
 # TYPO3:
 #   SwiftMailer:

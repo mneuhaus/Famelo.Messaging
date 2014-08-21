@@ -26,9 +26,26 @@ class StandaloneView extends \TYPO3\Fluid\View\StandaloneView {
 	 */
 	static protected $caughtRequest;
 
+	/**
+	 * @Flow\Inject(setting="request.defaultSubpackage", package="Famelo.Messaging")
+	 * @var string
+	 */
+	protected $defaultSubpackage;
+
+	/**
+	 * @Flow\Inject(setting="request.defaultPackage", package="Famelo.Messaging")
+	 * @var string
+	 */
+	protected $defaultPackage;
+
 	public function initializeObject() {
 		$this->request = self::$caughtRequest;
 		parent::initializeObject();
+
+		if (self::$caughtRequest === NULL) {
+			$this->request->setControllerSubpackageKey($this->defaultSubpackage);
+			$this->request->setControllerPackageKey($this->defaultPackage);
+		}
 
 		$this->request->setFormat('html');
 	}
