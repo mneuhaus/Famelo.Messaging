@@ -60,7 +60,13 @@ class DebugTransport implements \TYPO3\SwiftMailer\TransportInterface {
 				mkdir($mailboxPath);
 			}
 			$messageFile = $mailboxPath . $message->getSubject() . ' || ' . date('d.m.Y H:i:s') . '.html';
-			file_put_contents($messageFile, $message->getRawBody());
+			$content = $message->getRawBody();
+
+			foreach ($message->getChildren() as $child) {
+				$content.= '<br />[Attachment: ' . $child->getFilename() . ']';
+			}
+
+			file_put_contents($messageFile, $content);
 		}
 
 			// Return every receipient as "delivered"
