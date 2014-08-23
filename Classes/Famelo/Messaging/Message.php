@@ -76,10 +76,16 @@ class Message extends \TYPO3\SwiftMailer\Message {
 	 */
 	protected static $routerConfigured = FALSE;
 
+	/**
+	 * @var string
+	 */
+	protected $contentType;
+
 	public function __construct($subject = NULL, $body = NULL, $contentType = NULL, $charset = NULL) {
 		if ($contentType === NULL) {
 			$contentType = 'text/html';
 		}
+		$this->contentType = $contentType;
 		parent::__construct($subject, $body, $contentType, $charset);
 	}
 
@@ -107,7 +113,7 @@ class Message extends \TYPO3\SwiftMailer\Message {
 		}
 
 		$this->initializeRouter();
-		$this->setBody($this->render(), $this->getContentType());
+		$this->setBody($this->render(), $this->contentType);
 		$this->setOptionsByViewHelper();
 
 		$redirectAllMessagesTo = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Famelo.Messaging.redirectAllMessagesTo');
