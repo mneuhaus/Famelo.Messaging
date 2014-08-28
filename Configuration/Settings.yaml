@@ -6,6 +6,7 @@
     # request:
     #   defaultPackage: 'My.Package'
     #   defaultSubpackage: 'Frontend'
+    #   defaultController: 'Standard'
 
 # TYPO3:
 #   SwiftMailer:

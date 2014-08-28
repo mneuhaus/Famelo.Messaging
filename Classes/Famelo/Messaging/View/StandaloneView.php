@@ -22,7 +22,7 @@ use TYPO3\Flow\Annotations as Flow;
  */
 class StandaloneView extends \TYPO3\Fluid\View\StandaloneView {
 	/**
-	 * @var ActionRequest
+	 * @var \TYPO3\Flow\Mvc\ActionRequest
 	 */
 	static protected $caughtRequest;
 
@@ -38,6 +38,12 @@ class StandaloneView extends \TYPO3\Fluid\View\StandaloneView {
 	 */
 	protected $defaultPackage;
 
+	/**
+	 * @Flow\Inject(setting="request.defaultController", package="Famelo.Messaging")
+	 * @var string
+	 */
+	protected $defaultController;
+
 	public function initializeObject() {
 		$this->request = self::$caughtRequest;
 		parent::initializeObject();
@@ -45,6 +51,7 @@ class StandaloneView extends \TYPO3\Fluid\View\StandaloneView {
 		if (self::$caughtRequest === NULL) {
 			$this->request->setControllerSubpackageKey($this->defaultSubpackage);
 			$this->request->setControllerPackageKey($this->defaultPackage);
+			$this->request->setControllerName($this->defaultController);
 		}
 
 		$this->request->setFormat('html');

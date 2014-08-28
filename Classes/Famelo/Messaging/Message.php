@@ -130,7 +130,9 @@ class Message extends \TYPO3\SwiftMailer\Message {
 			putenv('REDIRECT_FLOW_REWRITEURLS=true');
 			$baseUri = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'TYPO3.Flow.http.baseUri');
 			if ($baseUri !== NULL) {
-				$this->view->getRequest()->getHttpRequest()->setBaseUri($baseUri);
+				if (method_exists($this->view->getRequest()->getHttpRequest(), 'setBaseUri')) {
+					$this->view->getRequest()->getHttpRequest()->setBaseUri($baseUri);
+				}
 			}
 		}
 	}
