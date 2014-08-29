@@ -51,7 +51,9 @@ class StandaloneView extends \TYPO3\Fluid\View\StandaloneView {
 		if (self::$caughtRequest === NULL) {
 			$this->request->setControllerSubpackageKey($this->defaultSubpackage);
 			$this->request->setControllerPackageKey($this->defaultPackage);
-			$this->request->setControllerName($this->defaultController);
+			if ($this->defaultController !== NULL) {
+				$this->request->setControllerName($this->defaultController);
+			}
 		}
 
 		$this->request->setFormat('html');
