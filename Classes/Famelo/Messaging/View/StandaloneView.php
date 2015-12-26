@@ -55,8 +55,6 @@ class StandaloneView extends \TYPO3\Fluid\View\StandaloneView {
 				$this->request->setControllerName($this->defaultController);
 			}
 		}
-
-		$this->request->setFormat('html');
 	}
 
 	public function getViewHelperVariableContainer() {
